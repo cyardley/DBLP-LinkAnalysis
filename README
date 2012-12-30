@@ -1,0 +1,70 @@
+Link Analysis of DBLP Dataset
+Casey Yardley
+CSCI 485 (Data Mining)
+Spring 2012
+Vancouver Island University
+========================================
+A set of python scripts to process, analyze, cache, and search DBLP Computer Science Bibliography citation network dataset.
+
+The dataset is large, so I won't mirror it on github.
+Download here: http://arnetminer.org/citation (Tested with version 3)
+
+Requirments:
+-Python
+-numpy (http://numpy.scipy.org/) 
+PageRank.py is an implementation of the pagerank algorithm by Peter Bengtsson (http://www.peterbe.com/).
+source: http://www.peterbe.com/plog/blogitem-040321-1
+
+
+GOALS
+========================================
+-Analyze a dataset of academic paper citation relationships from the DBLP Computer Science Bibliography.
+-Use PageRank Link Analysis on the references between papers to find the most influential.
+-Use the ranking as an order for which papers to search first in a keyword search.
+
+DATASET
+========================================
+-Citation network containing 1,632,422 papers and 2,327,450 citation relationships.
+-Format: 845.4 MB text file.
+-Data Fields:
+  *Paper Title, Authors, Year, Publiation Venue
+  *Paper Index ID
+  *ID of all papers that reference this paper
+  *Paper Abstract
+
+ISSUES
+========================================
+-Very large dataset
+-References between papers are very disjoint.
+-Many papers that are referenced frequently by others do not reference many papers themselves
+-Many papers that references others frequently are not referenced by many other papers
+-Many papers are not referenced by any other papers
+
+SQL Database: manage_db.py
+========================================
+The first issue was how to efficiently look up papers. Scanning through the entire file once for every query is very impractical. I choose to populate a SQLite database with the dataset. This significantly reduced look up times, and allowed for efficient slicing and ordering of data.
+
+Create Reference Tables: web.py
+========================================
+The reference tables are created with data from SQL queries, and then used to construct the matrix of references. The ref_dict reference table maps paper IDs to a list of papers that reference that paper. The pub_dict reference table maps paper IDs to their publishers. The ipub_dict reference table is the inverse of pub_dict and maps publishers to the reference id of some paper that it published. The reference tables are then serialized and saved to disk for future access. A hub_dict and auth_dict are also created, with record initial hub and authority values of each paper. Only papers with initial hub and authority values larger than hubmin and authmin are included when generating the pub_dict.
+
+Create Web Table: web.py
+========================================
+The web_dict reference table maps publishers to a set of the publishers who publish a paper that reference a paper that it published. It starts out with an initial set of publishers, and then removes all publishers which don't have papers referencing them.
+
+Create Matrix of References: web.py
+========================================
+The web_matrix is a zeros matrix of size equal to the number of publishers in the web_dict. After it is created, each column is marked according to the corresponding reference from web_dict. This creates the matrix of references between publishers. The order of the publishers in the matrix and web_matrix is then serialized and saved.
+
+Link Analysis: PageRank.py
+========================================
+Now the PageRank algorithm takes the web_matrix as input and simulates on step of traffic following the reference links. After several iterations of this, the list of publishers are sorted by how influential they are, serialized, and saved to disk. 
+
+Cache: manage_db.py
+========================================
+Now that the list of top publishers is saved, a cache of their papers can be saved in order to speed up searches. Since the cache contains significantly less papers than the full database, the search time on the cache is much faster (at least for small queries or frequent search terms). 
+
+Search: search.py, index.py
+========================================
+Users can enter search terms, and the papers from the most influential publishers are displayed to the user. First the cache is searched, and if the query needs more results then the full database of papers is searched. There is a command line and a web interface. The web interface allows the user to specify how many papers they want, a maximum time for the query to run, and a minimum number for how often a result has been referenced by other papers in the dataset.
+
