@@ -5,8 +5,9 @@ import time
 import cgi
 import urllib
 from util import sprint, sortReverse
+from os import path
 
-scriptpath = "/var/www/py/"
+scriptpath = "{}/".format(path.dirname(path.realpath(__file__)))
 searchurl = "http://dblp.isearch-it-solutions.net/dblp/Search.action?q="
 
 def query(db, table, columns, pub, minref):

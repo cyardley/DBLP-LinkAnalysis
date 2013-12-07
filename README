@@ -6,14 +6,27 @@ Vancouver Island University
 ========================================
 A set of python scripts to process, analyze, cache, and search DBLP Computer Science Bibliography citation network dataset.
 
-The dataset is large, so I won't mirror it on github.
-Download here: http://arnetminer.org/citation (Tested with version 3)
-
 Requirments:
+-At least 2GB free disk space (maybe more if you increase cache size)
 -Python
 -numpy (http://numpy.scipy.org/) 
+
+Instructions:
+1. Download and extract dataset:
+	http://arnetminer.org/lab-datasets/citation/DBLP-citation-network-Oct-19.tar.gz
+2. Run manage_db.py, At the prompt type 'create' and then 'pop' and wait for the database to be populated with the dataset.
+3. Type 'commit' at the prompt to write the database to the disk, and then type 'exit' to exit manage_db.py.
+4. Run web.py to create lookup tables and matrix of references
+5. Run PageRank.py to rank the publishers
+6. Now run manage_db.py again and type 'cache', and then type the number of publishers to cache, to create cache of papers from top publishers (speed up search results for most likely to be accessed papers). Don't make this number too big
+7. Type 'commit' at the prompt to write the database (cache table) to the disk, and type 'exit' to exit manage_db.py.
+8. Run search.py from the command prompt to search via command line. You can open index.html to search and view results in a web browser.
+
 PageRank.py is an implementation of the pagerank algorithm by Peter Bengtsson (http://www.peterbe.com/).
 source: http://www.peterbe.com/plog/blogitem-040321-1
+
+The dataset is large, so I won't mirror it on github.
+source: http://arnetminer.org/citation (Tested with version 3)
 
 
 GOALS

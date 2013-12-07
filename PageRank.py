@@ -100,9 +100,11 @@ def doRank():
     sprint("Saving Results List:")
     cPickle.dump(topResults, open('top_pub', 'wb'))
 
+    return topResults
+
 if __name__=='__main__':
 
-    doRank()
+    topResults = doRank()
 
     sprint("...done.\n")
     print "Top 10:"
