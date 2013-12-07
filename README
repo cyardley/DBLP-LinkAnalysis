@@ -10,6 +10,7 @@ Requirments:
 -At least 2GB free disk space (maybe more if you increase cache size)
 -Python
 -numpy (http://numpy.scipy.org/) 
+-Flask (http://flask.pocoo.org/) (Optional, only required for web search)
 
 Instructions:
 1. Download and extract dataset:
@@ -20,7 +21,7 @@ Instructions:
 5. Run PageRank.py to rank the publishers
 6. Now run manage_db.py again and type 'cache', and then type the number of publishers to cache, to create cache of papers from top publishers (speed up search results for most likely to be accessed papers). Don't make this number too big
 7. Type 'commit' at the prompt to write the database (cache table) to the disk, and type 'exit' to exit manage_db.py.
-8. Run search.py from the command prompt to search via command line. You can open index.html to search and view results in a web browser.
+8. Run search.py from the command prompt to search via command line. Optionally, if you have Flask (http://flask.pocoo.org/) you can run __init__.py and then go to use the web search http://localhost:5000/ in a web browser.
 
 PageRank.py is an implementation of the pagerank algorithm by Peter Bengtsson (http://www.peterbe.com/).
 source: http://www.peterbe.com/plog/blogitem-040321-1

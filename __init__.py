@@ -43,7 +43,8 @@ def search():
     return render_template("search.html", result_html=r_html, search=searchTerm, results=results, pubs=pubs, time=str(round(time.time()-t, 2)))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run()
     
     
     
