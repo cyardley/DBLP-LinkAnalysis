@@ -1,10 +1,13 @@
 Link Analysis of DBLP Dataset
-Casey Yardley
+Casey Yardley - cyardley.ca
 CSCI 485 (Data Mining)
 Spring 2012
 Vancouver Island University
 ========================================
 A set of python scripts to process, analyze, cache, and search DBLP Computer Science Bibliography citation network dataset.
+
+Github: https://github.com/cyardley/DBLP-LinkAnalysis/
+Demo: http://cyardley.ca/apps/dblp
 
 Requirments:
 -At least 2GB free disk space (maybe more if you increase cache size)

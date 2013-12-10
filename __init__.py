@@ -10,10 +10,14 @@ import re
 scriptpath = "{}/".format(path.dirname(path.realpath(__file__)))
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    with open("{}README".format(scriptpath)) as rf:
+      readme = rf.readlines()
+    return render_template("index.html", readme=readme)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -43,8 +47,6 @@ def search():
     return render_template("search.html", result_html=r_html, search=searchTerm, results=results, pubs=pubs, time=str(round(time.time()-t, 2)))
 
 if __name__ == '__main__':
-    #app.run(debug=True)
     app.run()
-    
-    
-    
+    #app.run(debug=True)
+#    app.run(port=5001, host='0.0.0.0')

@@ -1,7 +1,7 @@
 <html><head>
-<title>DBLP Papers Search</title>
+<title>DBLP Papers Search Demo</title>
 </head><body>
-<h2>DBLP Papers Search</h2>
+<h2>DBLP Papers Search Demo</h2>
 <form action="search" method="POST">
 <p>#Results Goal: <select name="goal">
 <option>10</option><option>20</option><option selected="selected">40</option>
@@ -19,4 +19,8 @@ Min Ref: <select name="minref"><option>0</option><option selected='selected'>1</
 <p>Search: <input type="text" name="search">
 <input type="submit" value="Go"></p>
 </form>
+<hr>
+{% for line in readme %}
+{{line}}<br />
+{% endfor %}
 </body></html>
